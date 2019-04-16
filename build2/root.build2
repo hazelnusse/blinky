@@ -1,0 +1,9 @@
+c.std = c11
+using c
+h{*}: extension = h
+c{*}: extension = c
+
+cxx.std = latest
+using cxx
+hxx{*}: extension = hpp
+cxx{*}: extension = cpp

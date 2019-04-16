@@ -1,0 +1,12 @@
+# Common options
+cxx.coptions += -O1 -ggdb3 -Wall -Werror -Wextra -Wpedantic -mcpu=cortex-m7 -mthumb -mabi=aapcs -fomit-frame-pointer -falign-functions=16 -ffreestanding -finline-small-functions -findirect-inlining -ffunction-sections -fdata-sections -fno-common -mfloat-abi=hard -mfpu=fpv5-sp-d16 -fno-rtti -fno-exceptions -fno-non-call-exceptions -fno-use-cxa-atexit -fno-threadsafe-statics -Wall -Wextra -Wundef
+cxx.loptions += --specs=nosys.specs -nostartfiles -Wl,--cref,--no-warn-mismatch,--gc-sections
+
+# Blinky example
+exe{blinky}: cxx{startup stack_chk_fail}
+obj{startup}: cc.coptions += -Wa,-alms="$out_base"/startup.lst
+obj{stack_chk_fail}: cc.coptions += -Wa,-alms="$out_base"/stack_chk_fail.lst
+# TODO: figure out why changing linker script and then re-building doesn't
+# trigger re-build
+exe{blinky}: file{gcc_arm.ld}: include = adhoc
+exe{blinky}: cc.loptions += -Wl,-Map="$out_base"/blinky.map,--library-path="$src_base",--script="$src_base"/gcc_arm.ld

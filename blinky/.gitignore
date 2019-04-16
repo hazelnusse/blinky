@@ -1,0 +1,5 @@
+stm32-blinky
+
+# Testscript output directory (can be symlink).
+#
+test-stm32-blinky
